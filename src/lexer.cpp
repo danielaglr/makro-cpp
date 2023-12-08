@@ -1,4 +1,8 @@
 
+#include "include/makro.h"
+#include "include/lexer.h"
+#include "include/tokens.h"
+#include "include/error.h"
 
 std::vector<Token> Lexer::scanTokens() {
   while (!isAtEnd()) {

@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 
+#include "include/tokens.h"
 
 class Lexer {
   std::string source;

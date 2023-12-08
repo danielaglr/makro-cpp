@@ -4,9 +4,9 @@
 #include <sstream>
 #include <vector>
 
-#include "D:\Desktop\All Desktop Folders\Coding\GitHub\makro-cpp\include\makro.h"
-#include "D:\Desktop\All Desktop Folders\Coding\GitHub\makro-cpp\include\lexer.h"
-#include "D:\Desktop\All Desktop Folders\Coding\GitHub\makro-cpp\include\tokens.h"
+#include "include/makro.h"
+#include "include/lexer.h"
+#include "include/tokens.h"
 
 void Makro::runFile(std::string path) {
   std::ifstream sourceFile(path);
