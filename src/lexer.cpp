@@ -28,8 +28,61 @@ void Lexer::scanToken() {
       line++;
       break;
 
+    case '"': handleString(); break;
+
     default:
-      Error(line, "Unexpected character.");
+      if (isDigit(c)) {
+        handleNumber();
+      } else if (isAlpha(c)) {
+        handleIdentifier();
+      } else {
+        Error(line, "Unexpected character.");
+      }
       break;
   }
 }
+
+void Lexer::handleString() {
+  while (peek() != '"' && !isAtEnd()) {
+    if (peek() == '\n') line++;
+    advance();
+  }
+
+  if (isAtEnd()) {
+    Error(line, "Unterminated string.");
+    return;
+  }
+
+  advance();
+
+  std::string value = source.substr(start + 1, current - start - 2);
+  addToken(STRING, value);
+}
+
+void Lexer::handleNumber() {
+  while (isDigit(peek())) advance();
+
+  if (peek() == '.' && isDigit(peekNext())) {
+    advance();
+
+    while (isDigit(peek())) advance();
+  };
+
+  addToken(NUMBER, source.substr(start, current - start));
+}
+
+void Lexer::handleIdentifier() {
+  while (isAlphaNumeric(peek())) advance();
+
+  std::string text = source.substr(start, current - start);
+  TokenType type;
+
+  auto it = keywords.find(text);
+  if (it != keywords.end()) {
+    type = keywords.at(text);
+  } else {
+    type = IDENTIFIER;
+  };
+
+  addToken(type);
+};
